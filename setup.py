@@ -22,6 +22,7 @@ setup(
     url='https://github.com/bmihelac/pytest-image-snapshot',
     description='A pytest plugin for image snapshot management and comparison.',
     long_description=read('README.md'),
+    long_description_content_type='text/markdown',
     py_modules=['pytest_image_snapshot'],
     python_requires='>=3.5',
     install_requires=['pytest>=3.5.0', 'Pillow'],
