@@ -69,16 +69,17 @@ pytest --image-snapshot-update
 
 ## Example
 
-Visual regression test for home page with [playwright](https://playwright.dev/python/docs/intro):
+Visual regression test for [Django](https://www.djangoproject.com/) application home page with [playwright](https://playwright.dev/python/docs/intro):
 
 ```python
+from PIL import Image
 from io import BytesIO
 
-def test_homepage(page: Page, image_snapshot):
-    page.goto("http://localhost:8000")
+def test_homepage(live_server, page: Page, image_snapshot):
+    page.goto(f"{live_server}")
     # convert screenshot to image
     screenshot = Image.open(BytesIO(page.screenshot()))
-    is_image_equal(screenshot, "test_snapshots/homepage.png")
+    image_snapshot(screenshot, "test_snapshots/homepage.png")
 ```
 
 ## Contributing
