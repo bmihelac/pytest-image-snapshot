@@ -24,15 +24,13 @@ A pytest plugin for image snapshot management and comparison.
 
 ## Installation
 
-You can install \"pytest-image-snapshot\" via
-[pip](https://pypi.org/project/pip/) from
-[PyPI](https://pypi.org/project):
+You can install \"pytest-image-snapshot\" via pip from [PyPI](https://pypi.org/project/pytest-image-snapshot/):
 
     $ pip install pytest-image-snapshot
 
 ### Optional Dependency
 
-`pytest-image-snapshot` offers enhanced functionality with the optional `pixelmatch` package, suitable for advanced image comparison scenarios. To install `pytest-image-snapshot` along with this optional feature, use the following command:
+`pytest-image-snapshot` offers enhanced functionality with the optional [pixelmatch](https://github.com/whtsky/pixelmatch-py) package, suitable for advanced image comparison scenarios. To install `pytest-image-snapshot` along with this optional feature, use the following command:
 
 ```bash
 $ pip install pytest-image-snapshot[pixelmatch]
