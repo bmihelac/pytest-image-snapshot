@@ -1,7 +1,7 @@
 from pathlib import Path
 
 import pytest
-from PIL import Image, ImageChops
+from PIL import Image, ImageChops, ImageDraw
 from PIL import __version__ as PIL_VERSION
 
 
@@ -45,6 +45,15 @@ def image_diff(img_1, img_2):
     return diff if diff.getbbox(alpha_only=False) else None
 
 
+def get_expanded_box(bbox, img):
+    return (
+        max(bbox[0] - 1, 0),  # Left
+        max(bbox[1] - 1, 0),  # Top
+        min(bbox[2] + 1, img.width - 1),  # Right
+        min(bbox[3] + 1, img.height - 1),  # Bottom
+    )
+
+
 @pytest.fixture
 def image_snapshot(request):
     def _image_snapshot(img, img_path):
@@ -58,9 +67,20 @@ def image_snapshot(request):
             diff = image_diff(img_1, img_2)
             if diff:
                 if config.option.verbose:
+                    bbox = diff.getbbox()
+                    if config.option.verbose > 1:
+                        ImageDraw.Draw(diff).rectangle(
+                            get_expanded_box(bbox, diff), outline="red", width=1
+                        )
                     diff.show(title="diff")
                     if config.option.verbose > 1:
+                        ImageDraw.Draw(src_image).rectangle(
+                            get_expanded_box(bbox, src_image), outline="red", width=1
+                        )
                         src_image.show(title="original")
+                        ImageDraw.Draw(img).rectangle(
+                            get_expanded_box(bbox, img), outline="red", width=1
+                        )
                         img.show(title="new")
                 raise ImageMismatchError(
                     f"Image does not match the snapshot stored in {img_path}"
