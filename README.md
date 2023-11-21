@@ -14,11 +14,13 @@ A pytest plugin for image snapshot management and comparison.
 - **Snapshot Creation**: If a reference snapshot doesn't exist, the plugin will create it during the test run, making initial setup effortless.
 - **Verbose Mode Display**: Capable of displaying the difference image for quick visual feedback in case of mismatches when running tests with `-v`.
 - **Snapshot Update Option**: Includes a `--image-snapshot-update` flag to update existing snapshots or create new ones, accommodating visual changes in your project.
+- **Threshold-Based Comparison**: Utilizes the `threshold` argument for enhanced image comparison with the `pixelmatch` library, enabling anti-aliasing pixel detection.
 
 
 ## Requirements
 
 -   Pillow
+-   pixelmatch (optional)
 
 ## Installation
 
@@ -27,6 +29,14 @@ You can install \"pytest-image-snapshot\" via
 [PyPI](https://pypi.org/project):
 
     $ pip install pytest-image-snapshot
+
+### Optional Dependency
+
+`pytest-image-snapshot` offers enhanced functionality with the optional `pixelmatch` package, suitable for advanced image comparison scenarios. To install `pytest-image-snapshot` along with this optional feature, use the following command:
+
+```bash
+$ pip install pytest-image-snapshot[pixelmatch]
+```
 
 ## Pytest Image Snapshot Usage Example
 
@@ -45,6 +55,18 @@ def test_image(image_snapshot):
     # Compare it to the snapshot stored in test_snapshots/test.png
     # If test_snapshots/test.png does not exist, it will be created
     image_snapshot(image, "test_snapshots/test.png")
+```
+
+### Optional `threshold` Argument in `image_snapshot`
+
+The `image_snapshot` function includes an optional `threshold` argument. When set, and if the image does not match the snapshot, the `pixelmatch` library is used for a detailed comparison with anti-aliasing pixel detection.
+
+- **Default Threshold:** If `threshold` is set to `True`, a default threshold value is utilized.
+- **Custom Threshold:** If `threshold` is a numeric value, it is passed to the `pixelmatch` library to specify the tolerance level for image comparison.
+
+```python
+image_snapshot(image, "test_snapshots/test.png", True)
+image_snapshot(image, "test_snapshots/test.png", 0.2)
 ```
 
 > **⚠️ Warning:**

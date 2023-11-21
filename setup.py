@@ -26,6 +26,9 @@ setup(
     py_modules=['pytest_image_snapshot'],
     python_requires='>=3.5',
     install_requires=['pytest>=3.5.0', 'Pillow'],
+    extras_require={
+        'pixelmatch': ['pixelmatch>=0.3.0']
+    },
     classifiers=[
         'Development Status :: 4 - Beta',
         'Framework :: Pytest',

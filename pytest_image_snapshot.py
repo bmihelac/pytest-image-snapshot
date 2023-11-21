@@ -47,7 +47,7 @@ def image_diff(img_1, img_2):
 
 @pytest.fixture
 def image_snapshot(request):
-    def _image_snapshot(img, img_path):
+    def _image_snapshot(img, img_path, threshold=None):
         config = request.config
         update_snapshots = config.getoption("--image-snapshot-update")
 
@@ -57,6 +57,23 @@ def image_snapshot(request):
             img_1, img_2 = extend_to_match_size(img, src_image)
             diff = image_diff(img_1, img_2)
             if diff:
+                if threshold:
+                    try:
+                        from pixelmatch.contrib.PIL import pixelmatch
+                    except ModuleNotFoundError:
+                        raise ModuleNotFoundError(
+                            "The 'pixelmatch' package is required for tests using the "
+                            "'threshold' argument but is not installed. "
+                            "Please install it using 'pip install pixelmatch'."
+                        )
+
+                    if threshold is True:
+                        threshold = None
+                    mismatch = pixelmatch(
+                        img_1, img_2, threshold=threshold, fail_fast=True
+                    )
+                    if not mismatch:
+                        return
                 if config.option.verbose:
                     diff.show(title="diff")
                     if config.option.verbose > 1:
