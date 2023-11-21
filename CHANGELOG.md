@@ -1,12 +1,15 @@
-# 0.2.0 (2023-11-21)
+## 0.2.1 (2023-11-21)
+
+* doc: fix README links ([feac8ef](https://github.com/bmihelac/pytest-image-snapshot/commit/feac8ef))
+
+
+## 0.2.0 (2023-11-21)
 
 ### Features
 
 * add threshold option for anti-aliasing pixel detection ([ce7b303](https://github.com/bmihelac/pytest-image-snapshot/commit/ce7b303fa41cad906995f11ad60719c379ced935))
 
-
-
-# 0.1.1 (2023-11-16)
+## 0.1.1 (2023-11-16)
 
 
 ### Bug Fixes

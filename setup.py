@@ -13,7 +13,7 @@ def read(fname):
 
 setup(
     name='pytest-image-snapshot',
-    version='0.1.1',
+    version='0.2.1',
     author='Bojan Mihelac',
     author_email='bojan@informatikamihelac.com',
     maintainer='Bojan Mihelac',
