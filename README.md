@@ -99,7 +99,7 @@ def test_homepage(live_server, page: Page, image_snapshot):
     page.goto(f"{live_server}")
     # convert screenshot to image
     screenshot = Image.open(BytesIO(page.screenshot()))
-    image_snapshot(screenshot, "test_snapshots/homepage.png")
+    image_snapshot(screenshot, "test_snapshots/homepage.png", threshold=True)
 ```
 
 ## Contributing
