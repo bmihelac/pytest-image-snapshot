@@ -79,8 +79,15 @@ def image_snapshot(request):
                     if config.option.verbose > 1:
                         src_image.show(title="original")
                         img.show(title="new")
+                verbose_msg = (
+                    " Use -v or -vv to display diff."
+                    if not config.option.verbose
+                    else ""
+                )
+                snapshot_update_msg = " Use --image-snapshot-update to update snapshot."
                 raise ImageMismatchError(
-                    f"Image does not match the snapshot stored in {img_path}"
+                    f"Image does not match the snapshot stored in {img_path}."
+                    f"{verbose_msg}{snapshot_update_msg}"
                 )
             else:
                 return
