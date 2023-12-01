@@ -68,7 +68,7 @@ def image_snapshot(request):
                         )
 
                     if threshold is True:
-                        threshold = None
+                        threshold = 0.1
                     mismatch = pixelmatch(
                         img_1, img_2, threshold=threshold, fail_fast=True
                     )
