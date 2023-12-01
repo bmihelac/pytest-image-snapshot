@@ -1,3 +1,11 @@
+## 0.2.2 (2023-12-01)
+
+* fix: default threshold should not be None ([470c4b0](https://github.com/bmihelac/pytest-image-snapshot/commit/470c4b0))
+* fix: remove python 3.5 from supported versions ([7d08578](https://github.com/bmihelac/pytest-image-snapshot/commit/7d08578))
+* doc: use threshold in playwright example ([281b7dd](https://github.com/bmihelac/pytest-image-snapshot/commit/281b7dd))
+
+
+
 ## 0.2.1 (2023-11-21)
 
 * doc: fix README links ([feac8ef](https://github.com/bmihelac/pytest-image-snapshot/commit/feac8ef))
