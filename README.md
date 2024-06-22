@@ -79,6 +79,14 @@ The verbose mode enhances the output detail for `image_snapshot` tests:
 
 This feature assists in quickly identifying and analyzing visual differences during test failures.
 
+### Save actual image and diff image (`--image-snapshot-save-diff`)
+
+Use the `--image-snapshot-save-diff` flag to save the actual image and the diff image when there's a mismatch. This is particularly useful for debugging in a CI environment.
+
+```bash
+pytest --image-snapshot-save-diff
+```
+
 ### Updating Snapshots (`--image-snapshot-update`)
 
 Use the `--image-snapshot-update` flag to update or create new reference snapshots. This is useful for incorporating intentional visual changes into your tests, ensuring that your snapshots always reflect the current expected state.

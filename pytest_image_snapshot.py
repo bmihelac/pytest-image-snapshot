@@ -22,6 +22,11 @@ def pytest_addoption(parser):
         action="store_true",
         help="Fail if snapshot is missing, useful in CI",
     )
+    parser.addoption(
+        "--image-snapshot-save-diff",
+        action="store_true",
+        help="Save actual image and diff next to the snapshot, useful in CI",
+    )
 
 
 def extend_to_match_size(img1, img2):
@@ -60,6 +65,7 @@ def image_snapshot(request):
         config = request.config
         update_snapshots = config.getoption("--image-snapshot-update")
         fail_if_missing = config.getoption("--image-snapshot-fail-if-missing")
+        save_diff = config.getoption("--image-snapshot-save-diff")
 
         img_path = Path(img_path)
         if not update_snapshots and img_path.exists():
@@ -84,6 +90,9 @@ def image_snapshot(request):
                     )
                     if not mismatch:
                         return
+                if save_diff:
+                    diff.save(img_path.with_suffix(".diff" + img_path.suffix))
+                    img.save(img_path.with_suffix(".new" + img_path.suffix))
                 if config.option.verbose:
                     diff.show(title="diff")
                     if config.option.verbose > 1:

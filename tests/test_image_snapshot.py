@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from pathlib import Path
 import pytest
 
 from PIL import Image
@@ -44,6 +45,27 @@ def test_image_snapshot_fixture(pytester, test_image):
     )
 
     assert result.ret == 0
+
+
+def test_image_snapshot_fixture_save_diff(pytester, test_image):
+    pytester.makepyfile(
+        """
+        from pathlib import Path
+        from PIL import Image
+        import pytest
+
+        def test_different_image(image_snapshot):
+            image = Image.new('RGB', (150, 150), 'white')
+            with pytest.raises(AssertionError):
+                image_snapshot(image, "white.png")
+    """
+    )
+
+    result = pytester.runpytest("--image-snapshot-save-diff")
+
+    result.assert_outcomes(passed=1)
+    assert Path("white.diff.png").exists()
+    assert Path("white.new.png").exists()
 
 
 def test_image_snapshot_fixture_fail_on_missing(pytester):
