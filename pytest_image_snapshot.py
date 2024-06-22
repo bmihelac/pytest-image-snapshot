@@ -9,9 +9,18 @@ class ImageMismatchError(AssertionError):
     """Exception raised when images do not match."""
 
 
+class ImageNotFoundError(AssertionError):
+    """Exception raised when snapshot is missing."""
+
+
 def pytest_addoption(parser):
     parser.addoption(
         "--image-snapshot-update", action="store_true", help="Update image snapshots"
+    )
+    parser.addoption(
+        "--image-snapshot-fail-if-missing",
+        action="store_true",
+        help="Fail if snapshot is missing, useful in CI",
     )
 
 
@@ -50,6 +59,7 @@ def image_snapshot(request):
     def _image_snapshot(img, img_path, threshold=None):
         config = request.config
         update_snapshots = config.getoption("--image-snapshot-update")
+        fail_if_missing = config.getoption("--image-snapshot-fail-if-missing")
 
         img_path = Path(img_path)
         if not update_snapshots and img_path.exists():
@@ -91,7 +101,8 @@ def image_snapshot(request):
                 )
             else:
                 return
+        elif fail_if_missing and not img_path.exists():
+            raise ImageNotFoundError(f"Snapshot {img_path} not found.")
         img.save(img_path)
-        return
 
     return _image_snapshot

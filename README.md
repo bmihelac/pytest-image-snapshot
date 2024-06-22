@@ -87,6 +87,14 @@ Use the `--image-snapshot-update` flag to update or create new reference snapsho
 pytest --image-snapshot-update
 ```
 
+### Failing when snapshots are missing (`--image-snapshot-fail-if-missing`)
+
+Use the `--image-snapshot-fail-if-missing` flag to fail the test when the snapshot is missing. This is particularly useful in CI check to ensure that all snapshots are present and up-to-date.
+
+```bash
+pytest --image-snapshot-fail-if-missing
+```
+
 ## Example
 
 Visual regression test for [Django](https://www.djangoproject.com/) application home page with [playwright](https://playwright.dev/python/docs/intro):
