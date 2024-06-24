@@ -1,3 +1,7 @@
+## 0.3.0 (2023-12-01)
+
+* feat: improve error messages ([5d622bc](https://github.com/bmihelac/pytest-image-snapshot/commit/5d622bc))
+
 ## 0.2.2 (2023-12-01)
 
 * fix: default threshold should not be None ([470c4b0](https://github.com/bmihelac/pytest-image-snapshot/commit/470c4b0))

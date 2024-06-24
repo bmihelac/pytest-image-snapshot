@@ -13,7 +13,7 @@ def read(fname):
 
 setup(
     name='pytest-image-snapshot',
-    version='0.2.2',
+    version='0.3.0',
     author='Bojan Mihelac',
     author_email='bojan@informatikamihelac.com',
     maintainer='Bojan Mihelac',
@@ -36,9 +36,11 @@ setup(
         'Topic :: Software Development :: Testing',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
+        'Programming Language :: Python :: 3.12',
         'Programming Language :: Python :: 3 :: Only',
         'Programming Language :: Python :: Implementation :: CPython',
         'Programming Language :: Python :: Implementation :: PyPy',
