@@ -1,3 +1,9 @@
+## 0.4.0 (2023-12-01)
+
+* Add --image-snapshot-fail-if-missing
+* Update Python versions and add GitHub actions
+* Fail on missing snapshot
+
 ## 0.3.0 (2023-12-01)
 
 * feat: improve error messages ([5d622bc](https://github.com/bmihelac/pytest-image-snapshot/commit/5d622bc))
