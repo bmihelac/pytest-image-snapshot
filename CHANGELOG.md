@@ -1,3 +1,9 @@
+## 0.4.1 (2025-07-16)
+
+* refactor: move _image_snapshot outside fixture ([9e1d571](https://github.com/bmihelac/pytest-image-snapshot/commit/9e1d571))
+
+
+
 ## 0.4.0 (2023-12-01)
 
 * Add --image-snapshot-fail-if-missing
