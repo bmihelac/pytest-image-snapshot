@@ -1,3 +1,8 @@
+## 0.4.5 (2025-07-16)
+
+* fix: upgrade gh-action-sigstore-python ([53f8172](https://github.com/bmihelac/pytest-image-snapshot/commit/53f8172))
+
+
 ##  0.4.4 (2025-07-16)
 
 * fix version number
