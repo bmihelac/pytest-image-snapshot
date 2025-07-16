@@ -1,3 +1,15 @@
+##  0.4.4 (2025-07-16)
+
+* fix version number
+
+
+## 0.4.3  (2025-07-16)
+
+* fix: flake8 fix ([e28ea37](https://github.com/bmihelac/pytest-image-snapshot/commit/e28ea37))
+* Update release.yml to use v4  for artifact actions ([ef460e5](https://github.com/bmihelac/pytest-image-snapshot/commit/ef460e5))
+
+
+
 ## 0.4.2 (2025-07-16)
 
 * fix: flake8 fix ([d128d82](https://github.com/bmihelac/pytest-image-snapshot/commit/d128d82))
