@@ -119,6 +119,7 @@ def _image_snapshot(
 @pytest.fixture
 def image_snapshot(request):
     config = request.config
+
     def wrapper(img, img_path, threshold=None):
         return _image_snapshot(
             img,
