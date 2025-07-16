@@ -1,3 +1,8 @@
+## 0.4.2 (2025-07-16)
+
+* fix: flake8 fix ([d128d82](https://github.com/bmihelac/pytest-image-snapshot/commit/d128d82))
+
+
 ## 0.4.1 (2025-07-16)
 
 * refactor: move _image_snapshot outside fixture ([9e1d571](https://github.com/bmihelac/pytest-image-snapshot/commit/9e1d571))
