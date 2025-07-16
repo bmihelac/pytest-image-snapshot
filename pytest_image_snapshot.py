@@ -59,59 +59,74 @@ def image_diff(img_1, img_2):
     return diff if diff.getbbox(alpha_only=False) else None
 
 
+def _image_snapshot(
+    img,
+    img_path,
+    threshold=None,
+    update_snapshots=False,
+    fail_if_missing=False,
+    save_diff=False,
+    verbose=0,
+):
+    img_path = Path(img_path)
+    if not update_snapshots and img_path.exists():
+        src_image = Image.open(img_path)
+        img_1, img_2 = extend_to_match_size(img, src_image)
+        diff = image_diff(img_1, img_2)
+        if diff:
+            if threshold:
+                try:
+                    from pixelmatch.contrib.PIL import pixelmatch
+                except ModuleNotFoundError:
+                    raise ModuleNotFoundError(
+                        "The 'pixelmatch' package is required for tests using the "
+                        "'threshold' argument but is not installed. "
+                        "Please install it using 'pip install pixelmatch'."
+                    )
+
+                if threshold is True:
+                    threshold = 0.1
+                mismatch = pixelmatch(
+                    img_1, img_2, threshold=threshold, fail_fast=True
+                )
+                if not mismatch:
+                    return
+            if save_diff:
+                diff.save(img_path.with_suffix(".diff" + img_path.suffix))
+                img.save(img_path.with_suffix(".new" + img_path.suffix))
+            if verbose:
+                diff.show(title="diff")
+                if verbose > 1:
+                    src_image.show(title="original")
+                    img.show(title="new")
+            verbose_msg = (
+                " Use -v or -vv to display diff."
+                if not verbose
+                else ""
+            )
+            snapshot_update_msg = " Use --image-snapshot-update to update snapshot."
+            raise ImageMismatchError(
+                f"Image does not match the snapshot stored in {img_path}."
+                f"{verbose_msg}{snapshot_update_msg}"
+            )
+        else:
+            return
+    elif fail_if_missing and not img_path.exists():
+        raise ImageNotFoundError(f"Snapshot {img_path} not found.")
+    img.save(img_path)
+
+
 @pytest.fixture
 def image_snapshot(request):
-    def _image_snapshot(img, img_path, threshold=None):
-        config = request.config
-        update_snapshots = config.getoption("--image-snapshot-update")
-        fail_if_missing = config.getoption("--image-snapshot-fail-if-missing")
-        save_diff = config.getoption("--image-snapshot-save-diff")
-
-        img_path = Path(img_path)
-        if not update_snapshots and img_path.exists():
-            src_image = Image.open(img_path)
-            img_1, img_2 = extend_to_match_size(img, src_image)
-            diff = image_diff(img_1, img_2)
-            if diff:
-                if threshold:
-                    try:
-                        from pixelmatch.contrib.PIL import pixelmatch
-                    except ModuleNotFoundError:
-                        raise ModuleNotFoundError(
-                            "The 'pixelmatch' package is required for tests using the "
-                            "'threshold' argument but is not installed. "
-                            "Please install it using 'pip install pixelmatch'."
-                        )
-
-                    if threshold is True:
-                        threshold = 0.1
-                    mismatch = pixelmatch(
-                        img_1, img_2, threshold=threshold, fail_fast=True
-                    )
-                    if not mismatch:
-                        return
-                if save_diff:
-                    diff.save(img_path.with_suffix(".diff" + img_path.suffix))
-                    img.save(img_path.with_suffix(".new" + img_path.suffix))
-                if config.option.verbose:
-                    diff.show(title="diff")
-                    if config.option.verbose > 1:
-                        src_image.show(title="original")
-                        img.show(title="new")
-                verbose_msg = (
-                    " Use -v or -vv to display diff."
-                    if not config.option.verbose
-                    else ""
-                )
-                snapshot_update_msg = " Use --image-snapshot-update to update snapshot."
-                raise ImageMismatchError(
-                    f"Image does not match the snapshot stored in {img_path}."
-                    f"{verbose_msg}{snapshot_update_msg}"
-                )
-            else:
-                return
-        elif fail_if_missing and not img_path.exists():
-            raise ImageNotFoundError(f"Snapshot {img_path} not found.")
-        img.save(img_path)
-
-    return _image_snapshot
+    config = request.config
+    def wrapper(img, img_path, threshold=None):
+        return _image_snapshot(
+            img,
+            img_path,
+            threshold=threshold,
+            update_snapshots=config.getoption("--image-snapshot-update"),
+            fail_if_missing=config.getoption("--image-snapshot-fail-if-missing"),
+            save_diff=config.getoption("--image-snapshot-save-diff"),
+            verbose=config.option.verbose,
+        )
+    return wrapper
