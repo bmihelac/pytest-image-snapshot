@@ -1,0 +1,53 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pytest-image-snapshot"
+version = "0.4.5"
+description = "A pytest plugin for image snapshot management and comparison."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.8"
+authors = [
+    { name = "Bojan Mihelac", email = "bojan@informatikamihelac.com" },
+]
+maintainers = [
+    { name = "Bojan Mihelac", email = "bojan@informatikamihelac.com" },
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Framework :: Pytest",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Testing",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "pytest>=3.5.0",
+    "Pillow",
+]
+
+[project.optional-dependencies]
+pixelmatch = ["pixelmatch>=0.3.0"]
+
+[project.urls]
+Homepage = "https://github.com/bmihelac/pytest-image-snapshot"
+
+[project.entry-points.pytest11]
+image-snapshot = "pytest_image_snapshot"
+
+[tool.setuptools]
+py-modules = ["pytest_image_snapshot"]
+
+[tool.ruff]
+line-length = 88
