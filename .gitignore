@@ -72,3 +72,4 @@ target/
 # pyenv
 .python-version
 
+uv.lock
