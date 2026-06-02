@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pytest-image-snapshot"
-version = "0.5.1"
+version = "0.5.3"
 description = "A pytest plugin for image snapshot management and comparison."
 readme = "README.md"
 license = "MIT"

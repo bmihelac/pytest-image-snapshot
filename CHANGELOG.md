@@ -1,5 +1,13 @@
 <!-- version list -->
 
+## v0.5.3 (2026-06-02)
+
+### Bug Fixes
+
+- Fix changelog
+  ([`faaacfd`](https://github.com/bmihelac/pytest-image-snapshot/commit/faaacfd3293112439641f7c6872eaac8ef922342))
+
+
 ## [0.5.2] - 2026-06-02
 
 ### ⚙️ Miscellaneous Tasks
