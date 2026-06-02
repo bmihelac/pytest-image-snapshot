@@ -4,6 +4,8 @@ import pytest
 
 from PIL import Image
 
+from pytest_image_snapshot import normalize_images
+
 
 @pytest.fixture
 def test_image(pytester):
@@ -85,3 +87,44 @@ def test_image_snapshot_fixture_fail_on_missing(pytester):
     result = pytester.runpytest("--image-snapshot-fail-if-missing")
 
     result.assert_outcomes(failed=1)
+
+
+class TestNormalizeImages:
+    def test_same_mode_and_size(self):
+        img1 = Image.new("RGB", (100, 100), "white")
+        img2 = Image.new("RGB", (100, 100), "red")
+        result1, result2 = normalize_images(img1, img2)
+        assert result1.size == (100, 100)
+        assert result2.size == (100, 100)
+        assert result1.mode == "RGB"
+        assert result2.mode == "RGB"
+
+    def test_different_sizes(self):
+        img1 = Image.new("RGB", (100, 100), "white")
+        img2 = Image.new("RGB", (200, 150), "red")
+        result1, result2 = normalize_images(img1, img2)
+        assert result1.size == (200, 150)
+        assert result2.size == (200, 150)
+
+    def test_different_modes_rgb_and_rgba(self):
+        img1 = Image.new("RGB", (100, 100), "white")
+        img2 = Image.new("RGBA", (100, 100), "red")
+        result1, result2 = normalize_images(img1, img2)
+        assert result1.mode == "RGBA"
+        assert result2.mode == "RGBA"
+
+    def test_different_modes_l_and_rgb(self):
+        img1 = Image.new("L", (100, 100), 128)
+        img2 = Image.new("RGB", (100, 100), "red")
+        result1, result2 = normalize_images(img1, img2)
+        assert result1.mode == "RGB"
+        assert result2.mode == "RGB"
+
+    def test_different_modes_and_sizes(self):
+        img1 = Image.new("RGB", (100, 100), "white")
+        img2 = Image.new("RGBA", (200, 150), (255, 0, 0, 128))
+        result1, result2 = normalize_images(img1, img2)
+        assert result1.mode == "RGBA"
+        assert result2.mode == "RGBA"
+        assert result1.size == (200, 150)
+        assert result2.size == (200, 150)

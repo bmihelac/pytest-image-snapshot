@@ -29,14 +29,23 @@ def pytest_addoption(parser):
     )
 
 
-def extend_to_match_size(img1, img2):
+def normalize_images(img1, img2):
     """
-    Extend the smaller image to match the size of the larger one.
+    Normalize two images to have the same mode and size for comparison.
+
+    Converts both images to the same mode if they differ, and extends the
+    smaller image to match the size of the larger one.
 
     :param img1: First PIL Image object
     :param img2: Second PIL Image object
-    :return: Tuple of two PIL Image objects with the same size
+    :return: Tuple of two PIL Image objects with the same mode and size
     """
+    # Convert to the same mode if different
+    if img1.mode != img2.mode:
+        target_mode = "RGBA" if "A" in img1.mode or "A" in img2.mode else "RGB"
+        img1 = img1.convert(target_mode)
+        img2 = img2.convert(target_mode)
+
     max_width = max(img1.width, img2.width)
     max_height = max(img1.height, img2.height)
 
@@ -71,7 +80,7 @@ def _image_snapshot(
     img_path = Path(img_path)
     if not update_snapshots and img_path.exists():
         src_image = Image.open(img_path)
-        img_1, img_2 = extend_to_match_size(img, src_image)
+        img_1, img_2 = normalize_images(img, src_image)
         diff = image_diff(img_1, img_2)
         if diff:
             if threshold:
