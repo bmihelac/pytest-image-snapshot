@@ -1,5 +1,32 @@
 <!-- version list -->
 
+## [0.5.2] - 2026-06-02
+
+### ⚙️ Miscellaneous Tasks
+
+- Add version list marker to CHANGELOG.md
+## [0.5.1] - 2026-06-02
+
+### 🐛 Bug Fixes
+
+- Update pyproject changelog_file
+## [0.5.0] - 2026-06-02
+
+### ⚙️ Miscellaneous Tasks
+
+- Added version_toml
+## [push] - 2026-06-02
+
+### 🚀 Features
+
+- Add normalize_images for mode normalization
+
+### ⚙️ Miscellaneous Tasks
+
+- Migrate to pyproject.toml, replace flake8 with ruff
+- Add semantic-release configuration
+- Ignore uv.lock
+
 ## 0.4.5 (2025-07-16)
 
 * fix: upgrade gh-action-sigstore-python ([53f8172](https://github.com/bmihelac/pytest-image-snapshot/commit/53f8172))
