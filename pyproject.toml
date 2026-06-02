@@ -71,7 +71,7 @@ prerelease_token = "rc"
 prerelease = false
 
 [tool.semantic_release.changelog]
-changelog_file = ""
+changelog_file = "CHANGELOG.md"
 exclude_commit_patterns = []
 mode = "update"
 insertion_flag = "<!-- version list -->"
